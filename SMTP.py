@@ -1,4 +1,5 @@
 import smtplib
+import traceback
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -51,10 +52,12 @@ class SMTP:
             print('Successfully logged')
         except smtplib.SMTPAuthenticationError:
             print('Bad combinaison of username/password')
+            exit(1)
         except smtplib.SMTPNotSupportedError:
             print('Authentication not supported')
         except smtplib.SMTPException:
             print('Error during authentication')
+            exit(1)
 
     def create_message(self, sender, name, receiver, subject, html):
 
@@ -82,4 +85,5 @@ class SMTP:
             print('Message successfully sent !')
         except smtplib.SMTPException:
             print('Error while sending the mail')
+            print(traceback.format_exc())
             exit(1)
